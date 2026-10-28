@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Whose Children? Home, school, and the state in Texas, 2025–26</title>
+  <meta name="description" content="An interactive map of who governs children's education in Texas during the 2025–26 school year.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Opening screen. Skipped automatically when the link points at a district. -->
+  <div id="splash" class="splash" role="dialog" aria-labelledby="splash-title">
+    <svg class="splash-fault" viewBox="0 0 1200 400" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 230 L120 210 L170 250 L260 190 L330 240 L420 170 L470 215 L560 160 L640 235 L700 185 L790 225 L860 150 L930 205 L1010 175 L1080 240 L1200 195"/>
+    </svg>
+    <div class="splash-inner">
+      <p class="splash-kicker">Home, school, and the state in Texas, 2025–26</p>
+      <h1 id="splash-title">Whose Children?</h1>
+      <p class="splash-lede">A public, interactive map of who governs children's education in Texas
+        during the 2025–26 school year. Explore five pressures on public schools on one district map,
+        see where neighboring districts split most sharply, and read the testimonies of the people
+        living on either side.</p>
+      <ul class="splash-lenses">
+        <li><b>Parent complaints</b> what they were about, and where</li>
+        <li><b>Book bans</b> <span class="soon-tag">Coming soon</span></li>
+        <li><b>School choice</b> <span class="soon-tag">Coming soon</span></li>
+        <li><b>Closures</b> <span class="soon-tag">Coming soon</span></li>
+        <li><b>Parent litigation</b> <span class="soon-tag">Coming soon</span></li>
+      </ul>
+      <button id="splash-go" class="btn-primary" type="button">Explore the map</button>
+      <p id="splash-demo" class="splash-demo" hidden>Showing demo data. Run <code>R/export_site_data.R</code> to load the real files.</p>
+    </div>
+  </div>
+
+  <header class="masthead">
+    <a class="brand" href="./">Whose Children? <span>2025–26</span></a>
+    <nav class="lenses" aria-label="Map topic" id="lens-nav"></nav>
+    <a class="masthead-link" href="overview.html">All five views</a>
+    <form class="search" role="search" onsubmit="return false">
+      <label for="search-input" class="visually-hidden">Find a district</label>
+      <input id="search-input" type="search" list="district-names" placeholder="Find a district" autocomplete="off">
+      <datalist id="district-names"></datalist>
+    </form>
+  </header>
+
+  <div class="layout">
+    <aside class="panel" id="panel" aria-label="About this map">
+      <section class="lens-intro" id="lens-intro" aria-live="polite"></section>
+
+      <section class="controls" id="controls" aria-label="Map controls">
+        <div class="control-row">
+          <span class="control-label" id="colorby-label">Color districts by</span>
+          <div class="segmented" role="radiogroup" aria-labelledby="colorby-label" id="colorby"></div>
+        </div>
+        <div class="control-row">
+          <span class="control-label" id="region-label">Region</span>
+          <div class="chips" id="filter-nces" role="group" aria-labelledby="region-label"></div>
+        </div>
+        <div class="control-row">
+          <span class="control-label" id="majority-label">Student majority</span>
+          <div class="chips" id="filter-majority" role="group" aria-labelledby="majority-label"></div>
+        </div>
+        <label class="toggle" id="fault-toggle-wrap">
+          <input type="checkbox" id="fault-toggle" checked>
+          Show the sharpest divides
+        </label>
+      </section>
+
+      <section class="charts" id="charts"></section>
+
+      <section class="spotlights" aria-labelledby="spot-title">
+        <h2 id="spot-title">Outlier spotlights</h2>
+        <p class="spot-help">Three districts per region with far more complaints than their enrollment predicts.</p>
+        <div class="spot-tabs" role="tablist" id="spot-tabs"></div>
+        <ol class="spot-list" id="spot-list"></ol>
+      </section>
+
+      <footer class="notes" id="notes"></footer>
+    </aside>
+
+    <main class="map-wrap">
+      <div id="map" aria-label="Map of Texas school districts"></div>
+      <div class="map-soon" id="map-soon" hidden>
+        <p class="map-soon-title">Data coming soon</p>
+        <p class="map-soon-text" id="map-soon-text"></p>
+        <button type="button" class="btn-primary" data-lens-go="complaints">See parent complaints</button>
+      </div>
+      <aside class="drawer" id="drawer" aria-live="polite" hidden>
+        <button type="button" class="drawer-close" id="drawer-close" aria-label="Close district details">Close</button>
+        <div id="drawer-body"></div>
+      </aside>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
