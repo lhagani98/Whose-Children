@@ -40,9 +40,7 @@ const CONFIG = {
       intro: (S, f) => `
         <p>From ${S.period_label.replace(" - ", " to ")}, Texas parents filed
         <strong>${f.n(S.totals.complaints_all)}</strong> complaints with the state.
-        Just <strong>${f.n(S.totals.half_districts)}</strong> districts account for more than half,
-        while those districts enroll ${f.pct(S.totals.half_share_students)} of students.
-        ${f.n(S.totals.zero_districts)} of ${f.n(S.totals.districts)} districts received none.</p>`,
+        ${f.n(S.totals.zero_districts)} of ${f.n(S.totals.districts)} districts received no parent complaints.</p>`,
     },
     bans: {
       ready: false,
